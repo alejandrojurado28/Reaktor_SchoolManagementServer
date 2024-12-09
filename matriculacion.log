@@ -1,0 +1,55 @@
+2024-12-09T11:42:49.943+01:00  INFO 13564 --- [main] .i.m.MatriculasHorariosServerApplication : Starting MatriculasHorariosServerApplication using Java 17.0.8.1 with PID 13564 (C:\Users\Usuario\Desktop\Pablo\PSP\MatriculasHorariosServer\target\classes started by Usuario in C:\Users\Usuario\Desktop\Pablo\PSP\MatriculasHorariosServer)
+2024-12-09T11:42:49.961+01:00 DEBUG 13564 --- [main] .i.m.MatriculasHorariosServerApplication : Running with Spring Boot v3.3.5, Spring v6.1.14
+2024-12-09T11:42:49.964+01:00  INFO 13564 --- [main] .i.m.MatriculasHorariosServerApplication : No active profile set, falling back to 1 default profile: "default"
+2024-12-09T11:42:51.714+01:00  INFO 13564 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-12-09T11:42:51.931+01:00  INFO 13564 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 198 ms. Found 13 JPA repository interfaces.
+2024-12-09T11:42:54.371+01:00  INFO 13564 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2024-12-09T11:42:54.557+01:00  INFO 13564 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2024-12-09T11:42:54.563+01:00  INFO 13564 --- [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.31]
+2024-12-09T11:42:55.019+01:00  INFO 13564 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2024-12-09T11:42:55.021+01:00  INFO 13564 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 4924 ms
+2024-12-09T11:42:56.124+01:00  INFO 13564 --- [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-12-09T11:42:56.692+01:00  INFO 13564 --- [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.5.3.Final
+2024-12-09T11:42:56.932+01:00  INFO 13564 --- [main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2024-12-09T11:42:58.765+01:00  INFO 13564 --- [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-12-09T11:42:58.858+01:00  INFO 13564 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2024-12-09T11:42:59.589+01:00  INFO 13564 --- [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@12166229
+2024-12-09T11:42:59.594+01:00  INFO 13564 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2024-12-09T11:43:05.977+01:00  INFO 13564 --- [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2024-12-09T11:43:06.248+01:00  INFO 13564 --- [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-12-09T11:43:06.997+01:00  INFO 13564 --- [main] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
+2024-12-09T11:43:07.973+01:00  WARN 13564 --- [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-12-09T11:43:08.788+01:00  INFO 13564 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path '/'
+2024-12-09T11:43:08.809+01:00  INFO 13564 --- [main] .i.m.MatriculasHorariosServerApplication : Started MatriculasHorariosServerApplication in 19.918 seconds (process running for 20.976)
+2024-12-09T11:46:22.797+01:00  INFO 13564 --- [http-nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-12-09T11:46:22.798+01:00  INFO 13564 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2024-12-09T11:46:22.800+01:00  INFO 13564 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 2 ms
+2024-12-09T11:46:22.858+01:00  WARN 13564 --- [http-nio-8080-exec-1] .w.s.m.s.DefaultHandlerExceptionResolver : Resolved [org.springframework.web.HttpMediaTypeNotSupportedException: Content-Type is not supported]
+2024-12-09T11:47:43.572+01:00  WARN 13564 --- [http-nio-8080-exec-3] .w.s.m.s.DefaultHandlerExceptionResolver : Resolved [org.springframework.web.HttpMediaTypeNotSupportedException: Content-Type is not supported]
+2024-12-09T12:06:38.102+01:00  INFO 15720 --- [main] .i.m.MatriculasHorariosServerApplication : Starting MatriculasHorariosServerApplication using Java 17.0.8.1 with PID 15720 (C:\Users\Usuario\Desktop\Pablo\PSP\MatriculasHorariosServer\target\classes started by Usuario in C:\Users\Usuario\Desktop\Pablo\PSP\MatriculasHorariosServer)
+2024-12-09T12:06:38.108+01:00 DEBUG 15720 --- [main] .i.m.MatriculasHorariosServerApplication : Running with Spring Boot v3.3.5, Spring v6.1.14
+2024-12-09T12:06:38.110+01:00  INFO 15720 --- [main] .i.m.MatriculasHorariosServerApplication : No active profile set, falling back to 1 default profile: "default"
+2024-12-09T12:06:39.498+01:00  INFO 15720 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-12-09T12:06:39.727+01:00  INFO 15720 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 209 ms. Found 13 JPA repository interfaces.
+2024-12-09T12:06:40.902+01:00  INFO 15720 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2024-12-09T12:06:40.927+01:00  INFO 15720 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2024-12-09T12:06:40.928+01:00  INFO 15720 --- [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.31]
+2024-12-09T12:06:41.068+01:00  INFO 15720 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2024-12-09T12:06:41.069+01:00  INFO 15720 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 2850 ms
+2024-12-09T12:06:41.355+01:00  INFO 15720 --- [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-12-09T12:06:41.489+01:00  INFO 15720 --- [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.5.3.Final
+2024-12-09T12:06:41.543+01:00  INFO 15720 --- [main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2024-12-09T12:06:42.108+01:00  INFO 15720 --- [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-12-09T12:06:42.190+01:00  INFO 15720 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2024-12-09T12:06:42.781+01:00  INFO 15720 --- [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@579f3c8e
+2024-12-09T12:06:42.785+01:00  INFO 15720 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2024-12-09T12:06:44.910+01:00  INFO 15720 --- [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2024-12-09T12:06:45.166+01:00  INFO 15720 --- [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-12-09T12:06:45.811+01:00  INFO 15720 --- [main] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
+2024-12-09T12:06:46.664+01:00  WARN 15720 --- [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-12-09T12:06:48.511+01:00  INFO 15720 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path '/'
+2024-12-09T12:06:48.557+01:00  INFO 15720 --- [main] .i.m.MatriculasHorariosServerApplication : Started MatriculasHorariosServerApplication in 11.517 seconds (process running for 12.328)
+2024-12-09T12:07:07.385+01:00  INFO 15720 --- [http-nio-8080-exec-2] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-12-09T12:07:07.385+01:00  INFO 15720 --- [http-nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2024-12-09T12:07:07.387+01:00  INFO 15720 --- [http-nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : Completed initialization in 2 ms
+2024-12-09T12:07:07.430+01:00  WARN 15720 --- [http-nio-8080-exec-2] .w.s.m.s.DefaultHandlerExceptionResolver : Resolved [org.springframework.web.HttpMediaTypeNotSupportedException: Content-Type is not supported]
