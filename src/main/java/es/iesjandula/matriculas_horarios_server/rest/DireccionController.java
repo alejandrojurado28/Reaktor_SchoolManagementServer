@@ -70,7 +70,7 @@ public class DireccionController
      * @param etapa      		 - La etapa educativa (por ejemplo, "Primaria", "Secundaria") asociada al curso.
      * @return ResponseEntity<?> - El mensaje de éxito o el detalle de un error ocurrido durante el procesamiento.
      */
-    @RequestMapping(method = RequestMethod.POST, value = "/matriculas", consumes = "multipart/form-data")
+    @RequestMapping(method = RequestMethod.POST, value = "/cargarMatriculas", consumes = "multipart/form-data")
     public ResponseEntity<?> cargarMatriculas 
     (
             @RequestParam(value = "csv", required = true) MultipartFile archivoCsv,
