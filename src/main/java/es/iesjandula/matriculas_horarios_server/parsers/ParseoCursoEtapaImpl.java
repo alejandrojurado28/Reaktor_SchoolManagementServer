@@ -10,6 +10,7 @@ import es.iesjandula.matriculas_horarios_server.models.ids.IdCursoEtapa;
 import es.iesjandula.matriculas_horarios_server.repositories.ICursoEtapaRepository;
 import es.iesjandula.matriculas_horarios_server.utils.Constants;
 import es.iesjandula.matriculas_horarios_server.utils.MatriculasHorariosServerException;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Clase de implementación - ParseoCursoEtapaImpl
@@ -19,6 +20,7 @@ import es.iesjandula.matriculas_horarios_server.utils.MatriculasHorariosServerEx
  * persistir los datos extraídos.
  * -----------------------------------------------------------------------------------------------------------------
  */
+@Slf4j
 @Service
 public class ParseoCursoEtapaImpl implements IParseoCursoEtapa
 {
@@ -67,18 +69,17 @@ public class ParseoCursoEtapaImpl implements IParseoCursoEtapa
                 this.iCursoEtapaRepository.saveAndFlush(cursoEtapa);
             }
         } 
-        catch (Exception e) 
+        catch (Exception exception) 
         {
-            // Captura cualquier excepción y lanza una excepción personalizada
-            throw new MatriculasHorariosServerException(1, "ERROR - Los datos de los cursos no han podido ser procesados", e);
+        	 // Captura cualquier excepción y lanza una excepción personalizada
+        	MatriculasHorariosServerException matriculasHorariosServerException = new MatriculasHorariosServerException(1, "ERROR - Los datos de los cursos no han podido ser procesados", exception);
+        	log.error(matriculasHorariosServerException.getBodyExceptionMessage().toString());
+           
+            
         }
         finally 
         {
-            // Cerrar el scanner de forma segura
-            if (scanner != null) 
-            {
-                scanner.close();
-            }
+             scanner.close();
         }
     }
 }

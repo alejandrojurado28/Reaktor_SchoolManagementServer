@@ -90,18 +90,15 @@ public class ParseoDatosBrutosImpl implements IParseoDatosBrutos
         } 
         catch (Exception exception) 
         {
-        	String errorString = "ERROR - Los datos de matrícula no han podido ser procesados" ;
-        	log.error(errorString, exception) ;
-            // Captura cualquier excepción y lanza una excepción personalizada
-            throw new MatriculasHorariosServerException(1, errorString, exception) ;
+        	 // Captura cualquier excepción y lanza una excepción personalizada
+        	MatriculasHorariosServerException matriculasHorariosServerException = new MatriculasHorariosServerException(1, "ERROR - Los datos de los cursos no han podido ser procesados", exception);
+        	log.error(matriculasHorariosServerException.getBodyExceptionMessage().toString());
+           
+            
         }
         finally 
         {
-            // Cerrar el scanner de forma segura
-            if (scanner != null) 
-            {
                 scanner.close();
-            }
         }
     }
 }

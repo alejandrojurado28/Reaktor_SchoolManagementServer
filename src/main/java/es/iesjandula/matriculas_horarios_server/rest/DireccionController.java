@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import es.iesjandula.matriculas_horarios_server.dtos.AlumnoDto;
+import es.iesjandula.matriculas_horarios_server.dtos.CursoEtapaDto;
 import es.iesjandula.matriculas_horarios_server.models.CursoEtapa;
 import es.iesjandula.matriculas_horarios_server.models.CursoEtapaGrupo;
 import es.iesjandula.matriculas_horarios_server.models.DatosBrutoAlumnoMatricula;
@@ -69,6 +70,7 @@ public class DireccionController
      * @param curso 	 		 - El identificador del curso al que se asignan las matrículas.
      * @param etapa      		 - La etapa educativa (por ejemplo, "Primaria", "Secundaria") asociada al curso.
      * @return ResponseEntity<?> - El mensaje de éxito o el detalle de un error ocurrido durante el procesamiento.
+     * @throws IOException 
      */
     @RequestMapping(method = RequestMethod.POST, value = "/cargarMatriculas", consumes = "multipart/form-data")
     public ResponseEntity<?> cargarMatriculas 
@@ -112,25 +114,25 @@ public class DireccionController
             log.info("INFO - Se ha enviado todo correctamente");
             
             // Devolver OK informando que se ha insertado los registros
-            return ResponseEntity.status(200).body("INFO - Se ha insertado todos los registros correctamente");
+            return ResponseEntity.ok().build();
         }
-	    catch (MatriculasHorariosServerException e) 
+	    catch (MatriculasHorariosServerException matriculasHorariosServerException) 
 	    {
 	    	// Manejo de excepciones personalizadas
-	    	log.error("ERROR - Código: {}, Mensaje: {}, Excepción: {}", e.getMessage(), e.getBodyExceptionMessage(), e);
+	    	log.error(matriculasHorariosServerException.getBodyExceptionMessage().toString());
 
 	        // Devolver la excepción personalizada con código 1 y el mensaje de error
-	        return ResponseEntity.status(404).body(e);
+	        return ResponseEntity.status(404).body(matriculasHorariosServerException.getBodyExceptionMessage());
 	    } 
-	    catch (IOException e) 
+	    catch (IOException ioException) 
 	    {
 	        // Manejo de excepciones generales
 	        String msgError = "ERROR - No se pudo realizar la lectura del fichero";
-	        log.error(msgError, e);
+	        log.error(msgError, ioException);
 
 	        // Devolver una excepción personalizada con código 1, el mensaje de error y la excepcion general
-	        MatriculasHorariosServerException exception = new MatriculasHorariosServerException(1, msgError, e);
-	        return ResponseEntity.status(500).body(exception);
+	        MatriculasHorariosServerException matriculasHorariosServerException = new MatriculasHorariosServerException(1, msgError, ioException);
+	        return ResponseEntity.status(500).body(matriculasHorariosServerException.getBodyExceptionMessage());
 	    }
 	}
 		
@@ -149,10 +151,10 @@ public class DireccionController
         try 
         {
             // Lista usada para guardar los registros de la Tabla CursoEtapa
-            List<CursoEtapa> listaCursoEtapa= new ArrayList<>();
+            List<CursoEtapaDto> listaCursoEtapa= new ArrayList<>();
             
             // Asignar los registros de la Tabla CursoEtapa
-            listaCursoEtapa = this.iCursoEtapaRepository.findAll();
+            listaCursoEtapa = this.iCursoEtapaRepository.findCursoEtapa();
             
             // Si la lista esta vacia, lanzar excepcion
             if(listaCursoEtapa.isEmpty())
@@ -165,23 +167,23 @@ public class DireccionController
             // Devolver la lista
             return ResponseEntity.status(200).body(listaCursoEtapa);
         }
-        catch (MatriculasHorariosServerException e) 
+        catch (MatriculasHorariosServerException matriculasHorariosServerException) 
         {
             // Manejo de excepciones personalizadas
-            log.error("ERROR - Código: {}, Mensaje: {}, Excepción: {}", e.getMessage(), e.getBodyExceptionMessage(), e);
+            log.error(matriculasHorariosServerException.getBodyExceptionMessage().toString());
 
             // Devolver la excepción personalizada con código 1 y el mensaje de error
-            return ResponseEntity.status(404).body(e);
+            return ResponseEntity.status(404).body(matriculasHorariosServerException);
         } 
-        catch (Exception e) 
+        catch (Exception exception) 
         {
             // Manejo de excepciones generales
             String msgError = "ERROR - No se pudo cargar la lista";
-            log.error(msgError, e);
+            log.error(msgError, exception);
           
             // Devolver la excepción personalizada con código 1, el mensaje de error y la excepción general	        
-            MatriculasHorariosServerException exception = new MatriculasHorariosServerException(1, msgError, e);
-            return ResponseEntity.status(500).body(exception);
+            MatriculasHorariosServerException matriculasHorariosServerException = new MatriculasHorariosServerException(1, msgError, exception);
+            return ResponseEntity.status(500).body(matriculasHorariosServerException);
         }
     }
     
@@ -232,17 +234,17 @@ public class DireccionController
             log.info("INFO - Grupo creado correctamente para el curso: {} y etapa: {}", curso, etapa);
 
             // Devolver la respuesta indicando que el grupo ha sido creado correctamente
-            return ResponseEntity.status(200).body("INFO - Grupo creado correctamente");
+            return ResponseEntity.ok().build();
         } 
-        catch (Exception e) 
+        catch (Exception exception) 
         {
             // Manejo de excepciones generales
             String msgError = "ERROR - No se ha podido crear el grupo";
-            log.error(msgError, e);
+            log.error(msgError, exception);
             
             // Devolver una excepción personalizada con código 1, el mensaje de error y la excepcion general
-            MatriculasHorariosServerException exception = new MatriculasHorariosServerException(1, msgError, e);
-            return ResponseEntity.status(500).body(exception);
+            MatriculasHorariosServerException matriculasHorariosServerException = new MatriculasHorariosServerException(1, msgError, exception);
+            return ResponseEntity.status(500).body(matriculasHorariosServerException.getBodyExceptionMessage());
         }
     }
 
@@ -292,23 +294,23 @@ public class DireccionController
             // Devolver la lista de grupos encontrados
             return ResponseEntity.status(200).body(grupos);
         } 
-        catch (MatriculasHorariosServerException e) 
+        catch (MatriculasHorariosServerException matriculasHorariosServerException) 
         {
         	// Manejo de excepciones personalizadas
-        	log.error("ERROR - Código: {}, Mensaje: {}, Excepción: {}", e.getMessage(), e.getBodyExceptionMessage(), e);
+        	log.error(matriculasHorariosServerException.getBodyExceptionMessage().toString());
 
             // Devolver la excepción personalizada con código 1 y el mensaje de error
-            return ResponseEntity.status(404).body(e);
+            return ResponseEntity.status(404).body(matriculasHorariosServerException.getBodyExceptionMessage());
         } 
-        catch (Exception e) 
+        catch (Exception exception) 
         {
             // Manejo de excepciones generales
             String msgError = "ERROR - No se pudieron buscar los grupos";
-            log.error(msgError, e);
+            log.error(msgError, exception);
 
             // Devolver una excepción personalizada con código 1, el mensaje de error y la excepcion general
-            MatriculasHorariosServerException exception = new MatriculasHorariosServerException(1, msgError, e);
-            return ResponseEntity.status(500).body(exception);
+            MatriculasHorariosServerException matriculasHorariosServerException = new MatriculasHorariosServerException(1, msgError, exception);
+            return ResponseEntity.status(500).body(matriculasHorariosServerException.getBodyExceptionMessage());
         }
     }
 
@@ -339,6 +341,14 @@ public class DireccionController
             CursoEtapaGrupo cursoEtapaGrupo = new CursoEtapaGrupo();
             IdCursoEtapaGrupo idCursoEtapaGrupo = new IdCursoEtapaGrupo(curso, etapa, grupo);
             cursoEtapaGrupo.setIdCursoEtapaGrupo(idCursoEtapaGrupo);
+            
+            if(this.iCursoEtapaGrupoRepository.findById(idCursoEtapaGrupo).isEmpty())
+            {
+             	// Lanzar excepcion y mostrar log con mensaje de Error
+            	String msgError = "ERROR - El grupo indicado no existe";
+                log.error(msgError, curso, etapa);
+                throw new MatriculasHorariosServerException(1, msgError);
+            }
 
             // Obtener los Alumnos asignados al grupo a eliminar
             List<DatosBrutoAlumnoMatriculaGrupo> alumnosAsignadosAlGrupo = this.iDatosBrutoAlumnoMatriculaGrupoRepository.findAllByCursoEtapaGrupo(cursoEtapaGrupo);
@@ -376,17 +386,17 @@ public class DireccionController
             log.info("INFO - Grupo eliminado correctamente para el curso: {} y etapa: {}", curso, etapa);
             
             // Devolver mensaje de OK
-            return ResponseEntity.status(200).body("INFO - Grupo eliminado correctamente");
+            return ResponseEntity.ok().build();
         } 
-        catch (Exception e) 
+        catch (Exception exception) 
         {
             // Manejo de excepciones generales
             String msgError = "ERROR - No se pudo eliminar el grupo";
-            log.error(msgError, e);
+            log.error(msgError, exception);
 
             // Devolver una excepción personalizada con código 1, el mensaje de error y la excepcion general
-            MatriculasHorariosServerException exception = new MatriculasHorariosServerException(1, msgError, e);
-            return ResponseEntity.status(500).body(exception);
+            MatriculasHorariosServerException matriculasHorariosServerException = new MatriculasHorariosServerException(1, msgError, exception);
+            return ResponseEntity.status(500).body(matriculasHorariosServerException.getBodyExceptionMessage());
         }
     }
 	
@@ -434,15 +444,6 @@ public class DireccionController
 
                 for (Optional<DatosBrutoAlumnoMatricula> datosBrutoAlumnoMatriculaAsignaturaOpt : datosBrutoAlumnoMatriculaAsignaturasOpt)
                 {
-                    // Si no existe el AlumnoDto
-                    if (!datosBrutoAlumnoMatriculaAsignaturaOpt.isPresent())
-                    {
-                        // Lanzar excepcion y mostrar log con mensaje de Error
-                        String msgError = "ERROR - No se encontraron los datos de un alumno";
-                        log.error(msgError);
-                        throw new MatriculasHorariosServerException(1, msgError);
-                    }
-
                     // Asignar cada uno de los campos
                     datosBrutoAlumnoMatriculaGrupo.setNombre(datosBrutoAlumnoMatriculaAsignaturaOpt.get().getNombre());
                     datosBrutoAlumnoMatriculaGrupo.setApellidos(datosBrutoAlumnoMatriculaAsignaturaOpt.get().getApellidos());
@@ -461,26 +462,17 @@ public class DireccionController
             log.info("INFO - Alumnos asignados correctamente al grupo {} para el curso {} y etapa {}", grupo, curso, etapa);
 
             // Devolver mensaje de OK
-            return ResponseEntity.status(200).body("INFO - Alumnos asignados correctamente con el curso " 
-                    + curso + " y etapa " + etapa + " y grupo " + grupo);
+            return ResponseEntity.ok().build();
         } 
-        catch (MatriculasHorariosServerException e) 
-        {
-            // Manejo de excepciones personalizadas
-            log.error("ERROR - Código: {}, Mensaje: {}, Excepción: {}", e.getMessage(), e.getBodyExceptionMessage(), e);
-
-            // Devolver la excepción personalizada con código 1 y el mensaje de error
-            return ResponseEntity.status(404).body(e);
-        } 
-        catch (Exception e) 
+        catch (Exception exception) 
         {
             // Manejo de excepciones generales
             String msgError = "ERROR - No se pudieron asignar los alumnos al grupo";
-            log.error(msgError, e);
+            log.error(msgError, exception);
 
             // Devolver una excepción personalizada con código 1, el mensaje de error y la excepcion general
-            MatriculasHorariosServerException exception = new MatriculasHorariosServerException(1, msgError, e);
-            return ResponseEntity.status(500).body(exception);
+            MatriculasHorariosServerException matriculasHorariosServerException = new MatriculasHorariosServerException(1, msgError, exception);
+            return ResponseEntity.status(500).body(matriculasHorariosServerException.getBodyExceptionMessage());
         }
     }
 	
@@ -545,25 +537,25 @@ public class DireccionController
             log.info("INFO - Alumno desasignado correctamente");
 
             // Devolver mensaje de OK
-            return ResponseEntity.status(200).body("INFO - Alumno desasignado correctamente");
+            return ResponseEntity.ok().build();
         } 
-        catch (MatriculasHorariosServerException e) 
+        catch (MatriculasHorariosServerException matriculasHorariosServerException) 
         {
             // Manejo de excepciones personalizadas
-            log.error("ERROR - Código: {}, Mensaje: {}, Excepción: {}", e.getMessage(), e.getBodyExceptionMessage(), e);
+            log.error(matriculasHorariosServerException.getBodyExceptionMessage().toString());
 
             // Devolver la excepción personalizada con código 1 y el mensaje de error
-            return ResponseEntity.status(404).body(e);
+            return ResponseEntity.status(404).body(matriculasHorariosServerException.getBodyExceptionMessage());
         } 
-        catch (Exception e) 
+        catch (Exception exception) 
         {
             // Manejo de excepciones generales
             String msgError = "ERROR - No se pudo desasignar el alumno del grupo";
-            log.error(msgError, e);
+            log.error(msgError, exception);
 
             // Devolver una excepción personalizada con código 1, el mensaje de error y la excepcion general
-            MatriculasHorariosServerException exception = new MatriculasHorariosServerException(1, msgError, e);
-            return ResponseEntity.status(500).body(exception);
+            MatriculasHorariosServerException matriculasHorariosServerException = new MatriculasHorariosServerException(1, msgError, exception);
+            return ResponseEntity.status(500).body(matriculasHorariosServerException.getBodyExceptionMessage());
         }
     }
 	
@@ -618,23 +610,23 @@ public class DireccionController
             // Devolver la lista de Alumnos
             return ResponseEntity.status(200).body(alumnosPendientesDeAsignarYAsignados);
         }
-        catch (MatriculasHorariosServerException e) 
+        catch (MatriculasHorariosServerException matriculasHorariosServerException) 
         {
             // Manejo de excepciones personalizadas
-            log.error("ERROR - Código: {}, Mensaje: {}, Excepción: {}", e.getMessage(), e.getBodyExceptionMessage(), e);
+            log.error(matriculasHorariosServerException.getBodyExceptionMessage().toString());
 
             // Devolver la excepción personalizada con código 1 y el mensaje de error
-            return ResponseEntity.status(404).body(e);
+            return ResponseEntity.status(404).body(matriculasHorariosServerException.getBodyExceptionMessage());
         }
-        catch(Exception e)
+        catch(Exception exception)
         {
             // Manejo de excepciones generales
             String msgError = "ERROR - No se pudo obtener la lista de alumnos";
-            log.error(msgError, e);
+            log.error(msgError, exception);
 
             // Devolver una excepción personalizada con código 1, el mensaje de error y la excepción general
-            MatriculasHorariosServerException exception = new MatriculasHorariosServerException(1, msgError, e);
-            return ResponseEntity.status(500).body(exception);
+            MatriculasHorariosServerException matriculasHorariosServerException = new MatriculasHorariosServerException(1, msgError, exception);
+            return ResponseEntity.status(500).body(matriculasHorariosServerException.getBodyExceptionMessage());
         }
     }
 

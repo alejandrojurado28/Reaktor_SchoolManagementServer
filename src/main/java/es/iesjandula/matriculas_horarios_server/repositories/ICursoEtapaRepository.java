@@ -1,8 +1,12 @@
 package es.iesjandula.matriculas_horarios_server.repositories;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import es.iesjandula.matriculas_horarios_server.dtos.CursoEtapaDto;
 import es.iesjandula.matriculas_horarios_server.models.CursoEtapa;
 import es.iesjandula.matriculas_horarios_server.models.ids.IdCursoEtapa;
 
@@ -16,5 +20,6 @@ import es.iesjandula.matriculas_horarios_server.models.ids.IdCursoEtapa;
 @Repository
 public interface ICursoEtapaRepository extends JpaRepository<CursoEtapa, IdCursoEtapa>
 {	
-	
+	@Query("SELECT new es.iesjandula.matriculas_horarios_server.dtos.CursoEtapaDto(c.idCursoEtapa.curso, c.idCursoEtapa.etapa) FROM CursoEtapa c")
+	List<CursoEtapaDto> findCursoEtapa();
 }
