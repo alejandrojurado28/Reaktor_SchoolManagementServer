@@ -4845,3 +4845,53 @@ Identify and stop the process that's listening on port 8080 or configure this ap
 2024-12-16T14:27:07.377+01:00  INFO 1604 --- [http-nio-8080-exec-2] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
 2024-12-16T14:27:07.378+01:00  INFO 1604 --- [http-nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
 2024-12-16T14:27:07.379+01:00  INFO 1604 --- [http-nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+2024-12-16T14:29:30.191+01:00  INFO 1400 --- [main] .i.m.MatriculasHorariosServerApplication : Starting MatriculasHorariosServerApplication using Java 23.0.1 with PID 1400 (C:\Users\2DAM\Desktop\Direccion_EquipoPablo\target\classes started by 2DAM in C:\Users\2DAM\Desktop\Direccion_EquipoPablo)
+2024-12-16T14:29:30.194+01:00 DEBUG 1400 --- [main] .i.m.MatriculasHorariosServerApplication : Running with Spring Boot v3.3.5, Spring v6.1.14
+2024-12-16T14:29:30.196+01:00  INFO 1400 --- [main] .i.m.MatriculasHorariosServerApplication : No active profile set, falling back to 1 default profile: "default"
+2024-12-16T14:29:31.643+01:00  INFO 1400 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-12-16T14:29:31.818+01:00  INFO 1400 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 158 ms. Found 13 JPA repository interfaces.
+2024-12-16T14:29:32.885+01:00  INFO 1400 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2024-12-16T14:29:32.916+01:00  INFO 1400 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2024-12-16T14:29:32.916+01:00  INFO 1400 --- [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.31]
+2024-12-16T14:29:33.007+01:00  INFO 1400 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2024-12-16T14:29:33.008+01:00  INFO 1400 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 2705 ms
+2024-12-16T14:29:33.354+01:00  INFO 1400 --- [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-12-16T14:29:33.476+01:00  INFO 1400 --- [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.5.3.Final
+2024-12-16T14:29:33.579+01:00  INFO 1400 --- [main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2024-12-16T14:29:34.028+01:00  INFO 1400 --- [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-12-16T14:29:34.078+01:00  INFO 1400 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2024-12-16T14:29:34.528+01:00  INFO 1400 --- [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@16391278
+2024-12-16T14:29:34.533+01:00  INFO 1400 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2024-12-16T14:29:36.169+01:00  INFO 1400 --- [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2024-12-16T14:29:36.382+01:00  INFO 1400 --- [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-12-16T14:29:36.925+01:00  INFO 1400 --- [main] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
+2024-12-16T14:29:38.083+01:00  WARN 1400 --- [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-12-16T14:29:38.973+01:00  INFO 1400 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path '/'
+2024-12-16T14:29:38.991+01:00  INFO 1400 --- [main] .i.m.MatriculasHorariosServerApplication : Started MatriculasHorariosServerApplication in 9.473 seconds (process running for 10.172)
+2024-12-16T14:29:41.466+01:00  INFO 1400 --- [http-nio-8080-exec-2] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-12-16T14:29:41.467+01:00  INFO 1400 --- [http-nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2024-12-16T14:29:41.470+01:00  INFO 1400 --- [http-nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : Completed initialization in 3 ms
+2024-12-16T14:29:41.853+01:00  INFO 1400 --- [http-nio-8080-exec-2] e.i.m.rest.DireccionController           : INFO - Alumnos asignados correctamente al grupo B para el curso 1 y etapa Bachillerato
+2024-12-16T14:32:03.914+01:00  INFO 6028 --- [main] .i.m.MatriculasHorariosServerApplication : Starting MatriculasHorariosServerApplication using Java 23.0.1 with PID 6028 (C:\Users\2DAM\Desktop\Direccion_EquipoPablo\target\classes started by 2DAM in C:\Users\2DAM\Desktop\Direccion_EquipoPablo)
+2024-12-16T14:32:03.916+01:00 DEBUG 6028 --- [main] .i.m.MatriculasHorariosServerApplication : Running with Spring Boot v3.3.5, Spring v6.1.14
+2024-12-16T14:32:03.918+01:00  INFO 6028 --- [main] .i.m.MatriculasHorariosServerApplication : No active profile set, falling back to 1 default profile: "default"
+2024-12-16T14:32:05.294+01:00  INFO 6028 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-12-16T14:32:05.500+01:00  INFO 6028 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 189 ms. Found 13 JPA repository interfaces.
+2024-12-16T14:32:06.776+01:00  INFO 6028 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2024-12-16T14:32:06.814+01:00  INFO 6028 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2024-12-16T14:32:06.815+01:00  INFO 6028 --- [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.31]
+2024-12-16T14:32:06.935+01:00  INFO 6028 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2024-12-16T14:32:06.936+01:00  INFO 6028 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 2901 ms
+2024-12-16T14:32:07.426+01:00  INFO 6028 --- [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-12-16T14:32:07.543+01:00  INFO 6028 --- [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.5.3.Final
+2024-12-16T14:32:07.625+01:00  INFO 6028 --- [main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2024-12-16T14:32:08.203+01:00  INFO 6028 --- [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-12-16T14:32:08.316+01:00  INFO 6028 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2024-12-16T14:32:09.061+01:00  INFO 6028 --- [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@305e95a4
+2024-12-16T14:32:09.068+01:00  INFO 6028 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2024-12-16T14:32:10.765+01:00  INFO 6028 --- [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2024-12-16T14:32:12.001+01:00  INFO 6028 --- [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-12-16T14:32:12.527+01:00  INFO 6028 --- [main] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
+2024-12-16T14:32:13.863+01:00  WARN 6028 --- [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-12-16T14:32:14.938+01:00  INFO 6028 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path '/'
+2024-12-16T14:32:14.955+01:00  INFO 6028 --- [main] .i.m.MatriculasHorariosServerApplication : Started MatriculasHorariosServerApplication in 11.847 seconds (process running for 12.592)

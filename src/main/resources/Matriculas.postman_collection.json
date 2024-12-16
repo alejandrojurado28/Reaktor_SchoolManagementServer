@@ -48,7 +48,7 @@
 			"response": []
 		},
 		{
-			"name": "New Request",
+			"name": "cursoErtapa",
 			"request": {
 				"method": "GET",
 				"header": [],
@@ -68,7 +68,7 @@
 			"response": []
 		},
 		{
-			"name": "New Request",
+			"name": "grupos",
 			"request": {
 				"method": "POST",
 				"header": [
@@ -99,7 +99,7 @@
 			"response": []
 		},
 		{
-			"name": "New Request",
+			"name": "devolverGrupos",
 			"request": {
 				"method": "GET",
 				"header": [
@@ -130,7 +130,7 @@
 			"response": []
 		},
 		{
-			"name": "New Request",
+			"name": "borrar GRupo",
 			"request": {
 				"method": "DELETE",
 				"header": [
@@ -166,7 +166,7 @@
 			"response": []
 		},
 		{
-			"name": "New Request",
+			"name": "Asignar Alumno",
 			"request": {
 				"method": "POST",
 				"header": [],
@@ -210,7 +210,7 @@
 			"response": []
 		},
 		{
-			"name": "New Request",
+			"name": "Borrar alumno",
 			"request": {
 				"method": "DELETE",
 				"header": [],
@@ -240,7 +240,7 @@
 			"response": []
 		},
 		{
-			"name": "New Request",
+			"name": "Alumnos En Grupos",
 			"request": {
 				"method": "GET",
 				"header": [],
