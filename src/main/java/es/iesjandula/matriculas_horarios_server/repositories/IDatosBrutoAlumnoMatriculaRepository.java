@@ -27,9 +27,9 @@ public interface IDatosBrutoAlumnoMatriculaRepository extends JpaRepository<Dato
      * 
      * @param nombre	 								 - El nombre del alumno a buscar.
      * @param apellidos 								 - Los apellidos del alumno a buscar.
-     * @return List<Optional<DatosBrutoAlumnoMatricula>> - Una lista de {@link Optional} de {@link DatosBrutoAlumnoMatricula} que coinciden con el nombre y apellidos.
+     * @return List<<DatosBrutoAlumnoMatricula> - Una lista de {@link Optional} de {@link DatosBrutoAlumnoMatricula} que coinciden con el nombre y apellidos.
      */
-    public List<Optional<DatosBrutoAlumnoMatricula>> findByNombreAndApellidos(String nombre, String apellidos);
+    public List<DatosBrutoAlumnoMatricula> findByNombreAndApellidos(String nombre, String apellidos);
     
     /**
      * Método para obtener nombres y apellidos únicos y mapearlos al DTO AlumnoDto.

@@ -430,31 +430,34 @@ public class DireccionController
             IdCursoEtapaGrupo idCursoEtapaGrupo = new IdCursoEtapaGrupo(curso, etapa, grupo);
             cursoEtapaGrupo.setIdCursoEtapaGrupo(idCursoEtapaGrupo);
 
-            // Crear registro de la Tabla DatosBrutosAlumnoMatriculaGrupo
-            DatosBrutoAlumnoMatriculaGrupo datosBrutoAlumnoMatriculaGrupo = new DatosBrutoAlumnoMatriculaGrupo();
+           
+        
 
             // Por cada alumno buscarlo en DatosBrutosAlumnoMatricula y añadirlos a DatosBrutosAlumnoMatriculaGrupo
             for (AlumnoDto alumno : alumnos)
             {
+            	
                 // Optional de DatosBrutoAlumnoMatriculaEntity
-                List<Optional<DatosBrutoAlumnoMatricula>> datosBrutoAlumnoMatriculaAsignaturasOpt;
+                List<DatosBrutoAlumnoMatricula> datosBrutoAlumnoMatriculaAsignaturasOpt;
 
                 // Buscar los registros del alumno en DatosBrutosAlumnoMatricula
                 datosBrutoAlumnoMatriculaAsignaturasOpt = this.iDatosBrutoAlumnoMatriculaRepository.findByNombreAndApellidos(alumno.getNombre(), alumno.getApellidos());
 
-                for (Optional<DatosBrutoAlumnoMatricula> datosBrutoAlumnoMatriculaAsignaturaOpt : datosBrutoAlumnoMatriculaAsignaturasOpt)
+                for (DatosBrutoAlumnoMatricula datosBrutoAlumnoMatriculaAsignaturaOpt : datosBrutoAlumnoMatriculaAsignaturasOpt)
                 {
+                	 // Crear registro de la Tabla DatosBrutosAlumnoMatriculaGrupo
+                    DatosBrutoAlumnoMatriculaGrupo datosBrutoAlumnoMatriculaGrupo = new DatosBrutoAlumnoMatriculaGrupo();
                     // Asignar cada uno de los campos
-                    datosBrutoAlumnoMatriculaGrupo.setNombre(datosBrutoAlumnoMatriculaAsignaturaOpt.get().getNombre());
-                    datosBrutoAlumnoMatriculaGrupo.setApellidos(datosBrutoAlumnoMatriculaAsignaturaOpt.get().getApellidos());
-                    datosBrutoAlumnoMatriculaGrupo.setAsignatura(datosBrutoAlumnoMatriculaAsignaturaOpt.get().getAsignatura());
+                    datosBrutoAlumnoMatriculaGrupo.setNombre(datosBrutoAlumnoMatriculaAsignaturaOpt.getNombre());
+                    datosBrutoAlumnoMatriculaGrupo.setApellidos(datosBrutoAlumnoMatriculaAsignaturaOpt.getApellidos());
+                    datosBrutoAlumnoMatriculaGrupo.setAsignatura(datosBrutoAlumnoMatriculaAsignaturaOpt.getAsignatura());
                     datosBrutoAlumnoMatriculaGrupo.setCursoEtapaGrupo(cursoEtapaGrupo);
 
                     // Guardar el registro en la tabla DatosBrutoAlumnoMatriculaGrupo
                     this.iDatosBrutoAlumnoMatriculaGrupoRepository.saveAndFlush(datosBrutoAlumnoMatriculaGrupo);
 
                     // Eliminar el registro en la tabla DatosBrutoAlumnoMatricula
-                    this.iDatosBrutoAlumnoMatriculaRepository.delete(datosBrutoAlumnoMatriculaAsignaturaOpt.get());
+                    this.iDatosBrutoAlumnoMatriculaRepository.delete(datosBrutoAlumnoMatriculaAsignaturaOpt);
                 }
             }
 
@@ -538,7 +541,7 @@ public class DireccionController
 
             // Devolver mensaje de OK
             return ResponseEntity.ok().build();
-        } 
+        } 			
         catch (MatriculasHorariosServerException matriculasHorariosServerException) 
         {
             // Manejo de excepciones personalizadas
