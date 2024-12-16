@@ -1,9 +1,9 @@
 {
 	"info": {
-		"_postman_id": "debdbecc-f089-4291-b56a-76d8fe80d588",
+		"_postman_id": "073676a3-1af8-4984-9a64-5de0202d6a2a",
 		"name": "Matriculas",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "23788920"
+		"_exporter_id": "40461126"
 	},
 	"item": [
 		{
@@ -28,7 +28,7 @@
 						{
 							"key": "csv",
 							"type": "file",
-							"src": []
+							"src": "/C:/Users/2DAM/Desktop/Direccion_EquipoPablo/src/main/resources/matricula.csv"
 						}
 					]
 				},
@@ -102,7 +102,18 @@
 			"name": "New Request",
 			"request": {
 				"method": "GET",
-				"header": [],
+				"header": [
+					{
+						"key": "curso",
+						"value": "1",
+						"type": "text"
+					},
+					{
+						"key": "etapa",
+						"value": "Bachillerato",
+						"type": "text"
+					}
+				],
 				"url": {
 					"raw": "http://localhost:8080/direccion/grupos",
 					"protocol": "http",
@@ -161,7 +172,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"alumnos\":[\r\n        {\r\n            \"nombre\" : \"Pepe\",\r\n            \"apellidos\" : \"Flores\"\r\n        },\r\n        {\r\n            \"nombre\" : \"Juan\",\r\n            \"apellidos\" : \"Boniato\"\r\n        }\r\n\r\n    ] \r\n    \r\n}",
+					"raw": "[\r\n    {\r\n        \"nombre\" : \"Pablo\",\r\n        \"apellidos\" : \"Martinez Guerbos\"\r\n    },\r\n    {\r\n        \"nombre\" : \"María\",\r\n        \"apellidos\" : \"Fernández López\"\r\n    }\r\n\r\n] \r\n    \r\n}",
 					"options": {
 						"raw": {
 							"language": "json"

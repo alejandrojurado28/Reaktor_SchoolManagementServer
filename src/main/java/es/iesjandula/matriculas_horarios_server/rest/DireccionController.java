@@ -341,7 +341,7 @@ public class DireccionController
             cursoEtapaGrupo.setIdCursoEtapaGrupo(idCursoEtapaGrupo);
 
             // Obtener los Alumnos asignados al grupo a eliminar
-            List<DatosBrutoAlumnoMatriculaGrupo> alumnosAsignadosAlGrupo = iDatosBrutoAlumnoMatriculaGrupoRepository.findAllByCursoEtapaGrupo(cursoEtapaGrupo);
+            List<DatosBrutoAlumnoMatriculaGrupo> alumnosAsignadosAlGrupo = this.iDatosBrutoAlumnoMatriculaGrupoRepository.findAllByCursoEtapaGrupo(cursoEtapaGrupo);
             
             // Registro de DatosBrutoAlumnoMatriculaEntity
             DatosBrutoAlumnoMatricula datosBrutoAlumnoMatricula = new DatosBrutoAlumnoMatricula();
@@ -363,14 +363,14 @@ public class DireccionController
                 datosBrutoAlumnoMatricula.setCursoEtapa(cursoEtapa);
                 
                 // Guardar el registro en BD
-                iDatosBrutoAlumnoMatriculaRepository.saveAndFlush(datosBrutoAlumnoMatricula);
+                this.iDatosBrutoAlumnoMatriculaRepository.saveAndFlush(datosBrutoAlumnoMatricula);
             }
             
             // Eliminar los alumnos asignados al grupo de la tabla DatosBrutoAlumnoMatriculaGrupo
-            iDatosBrutoAlumnoMatriculaGrupoRepository.deleteAll(alumnosAsignadosAlGrupo);
+            this.iDatosBrutoAlumnoMatriculaGrupoRepository.deleteAll(alumnosAsignadosAlGrupo);
             
             // Eliminar el grupo en la tabla CursoEtapaGrupo
-            iCursoEtapaGrupoRepository.delete(cursoEtapaGrupo);
+            this.iCursoEtapaGrupoRepository.delete(cursoEtapaGrupo);
             
             // Log de información antes de la respuesta
             log.info("INFO - Grupo eliminado correctamente para el curso: {} y etapa: {}", curso, etapa);
@@ -430,7 +430,7 @@ public class DireccionController
                 List<Optional<DatosBrutoAlumnoMatricula>> datosBrutoAlumnoMatriculaAsignaturasOpt;
 
                 // Buscar los registros del alumno en DatosBrutosAlumnoMatricula
-                datosBrutoAlumnoMatriculaAsignaturasOpt = iDatosBrutoAlumnoMatriculaRepository.findByNombreAndApellidos(alumno.getNombre(), alumno.getApellidos());
+                datosBrutoAlumnoMatriculaAsignaturasOpt = this.iDatosBrutoAlumnoMatriculaRepository.findByNombreAndApellidos(alumno.getNombre(), alumno.getApellidos());
 
                 for (Optional<DatosBrutoAlumnoMatricula> datosBrutoAlumnoMatriculaAsignaturaOpt : datosBrutoAlumnoMatriculaAsignaturasOpt)
                 {
@@ -450,10 +450,10 @@ public class DireccionController
                     datosBrutoAlumnoMatriculaGrupo.setCursoEtapaGrupo(cursoEtapaGrupo);
 
                     // Guardar el registro en la tabla DatosBrutoAlumnoMatriculaGrupo
-                    iDatosBrutoAlumnoMatriculaGrupoRepository.saveAndFlush(datosBrutoAlumnoMatriculaGrupo);
+                    this.iDatosBrutoAlumnoMatriculaGrupoRepository.saveAndFlush(datosBrutoAlumnoMatriculaGrupo);
 
                     // Eliminar el registro en la tabla DatosBrutoAlumnoMatricula
-                    iDatosBrutoAlumnoMatriculaRepository.delete(datosBrutoAlumnoMatriculaAsignaturaOpt.get());
+                    this.iDatosBrutoAlumnoMatriculaRepository.delete(datosBrutoAlumnoMatriculaAsignaturaOpt.get());
                 }
             }
 
@@ -504,7 +504,7 @@ public class DireccionController
         try 
         {
             // Optional DatosBrutoAlumnoMatriculaGrupo
-            List<Optional<DatosBrutoAlumnoMatriculaGrupo>> datosBrutoAlumnoMatriculaGrupoAsignaturasOpt = iDatosBrutoAlumnoMatriculaGrupoRepository.findAllByNombreAndApellidos(alumno.getNombre(), alumno.getApellidos());
+            List<Optional<DatosBrutoAlumnoMatriculaGrupo>> datosBrutoAlumnoMatriculaGrupoAsignaturasOpt = this.iDatosBrutoAlumnoMatriculaGrupoRepository.findAllByNombreAndApellidos(alumno.getNombre(), alumno.getApellidos());
 
             // Por cada asignatura del Alumno
             for (Optional<DatosBrutoAlumnoMatriculaGrupo> datosBrutoAlumnoMatriculaGrupoAsignaturaOpt : datosBrutoAlumnoMatriculaGrupoAsignaturasOpt)
@@ -535,10 +535,10 @@ public class DireccionController
                 datosBrutoAlumnoMatricula.setCursoEtapa(cursoEtapa);
 
                 // Guardar el registro en la tabla DatosBrutoAlumnoMatricula
-                iDatosBrutoAlumnoMatriculaRepository.saveAndFlush(datosBrutoAlumnoMatricula);
+                this.iDatosBrutoAlumnoMatriculaRepository.saveAndFlush(datosBrutoAlumnoMatricula);
 
                 // Eliminar el registro en la tabla DatosBrutoAlumnoMatriculaGrupo
-                iDatosBrutoAlumnoMatriculaGrupoRepository.delete(datosBrutoAlumnoMatriculaGrupoAsignaturaOpt.get());
+                this.iDatosBrutoAlumnoMatriculaGrupoRepository.delete(datosBrutoAlumnoMatriculaGrupoAsignaturaOpt.get());
             }
 
             // Log de información antes de la respuesta
@@ -598,10 +598,10 @@ public class DireccionController
             List<AlumnoDto> alumnosPendientesDeAsignarYAsignados = List.of();
             
             // Añadir a la lista de Alumnos a devolver los Alumnos pendientes de asignar por el CursoEtapa
-            alumnosPendientesDeAsignarYAsignados = iDatosBrutoAlumnoMatriculaRepository.findDistinctAlumnosByCursoEtapa(curso, etapa);
+            alumnosPendientesDeAsignarYAsignados = this.iDatosBrutoAlumnoMatriculaRepository.findDistinctAlumnosByCursoEtapa(curso, etapa);
             
             // Añadir a la lista de Alumnos a devolver los Alumnos asignados al CursoEtapaGrupo
-            alumnosPendientesDeAsignarYAsignados.addAll(iDatosBrutoAlumnoMatriculaGrupoRepository.findDistinctAlumnosByCursoEtapaGrupo(curso, etapa, grupo));
+            alumnosPendientesDeAsignarYAsignados.addAll(this.iDatosBrutoAlumnoMatriculaGrupoRepository.findDistinctAlumnosByCursoEtapaGrupo(curso, etapa, grupo));
             
             // Si la lista esta vacía
             if(alumnosPendientesDeAsignarYAsignados.isEmpty())
