@@ -10,6 +10,7 @@ import es.iesjandula.matriculas_horarios_server.models.DatosBrutoAlumnoMatricula
 import es.iesjandula.matriculas_horarios_server.repositories.IDatosBrutoAlumnoMatriculaRepository;
 import es.iesjandula.matriculas_horarios_server.utils.Constants;
 import es.iesjandula.matriculas_horarios_server.utils.MatriculasHorariosServerException;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Clase de implementación - ParseoDatosBrutosImpl
@@ -19,6 +20,7 @@ import es.iesjandula.matriculas_horarios_server.utils.MatriculasHorariosServerEx
  * almacenar la información procesada en la base de datos.
  * -----------------------------------------------------------------------------------------------------------------
  */
+@Slf4j
 @Service
 public class ParseoDatosBrutosImpl implements IParseoDatosBrutos
 {
@@ -51,48 +53,47 @@ public class ParseoDatosBrutosImpl implements IParseoDatosBrutos
                 // Array con valores del registro
                 String[] valoresRegistro = lineaRegistro.split(Constants.CSV_DELIMITER);
                 
-                // Se suma 1 porque Alumno es (1) y Martinez Guerbos, Pablo son(2)
-                if(valoresCampos.length + 1 == valoresRegistro.length)
+                // Apellidos del Alumno -> Martinez Guerbos
+                String apellidosAlumno = valoresRegistro[0].trim().replace("\"", "") ;
+                
+                // Nombre del Alumno -> Pablo
+                String nombreAlumno = valoresRegistro[1].trim().replace("\"", "") ;
+                
+                for (int i = 1; i < valoresCampos.length; i++)
                 {
-                    // Apellidos del Alumno -> Martinez Guerbos
-                    String apellidosAlumno = valoresRegistro[0].trim();
-                    // Nombre del Alumno -> Pablo
-                    String nombreAlumno = valoresRegistro[1].trim();
-                    
-                    // Crear registro
-                    DatosBrutoAlumnoMatricula datosBrutoAlumnoMatricula = new DatosBrutoAlumnoMatricula();
-                    
-                    // Añadir apellidos del alumno al registro -> Martinez Guerbos
-                    datosBrutoAlumnoMatricula.setApellidos(apellidosAlumno);
-                    
-                    // Añadir nombre del alumno al registro -> Pablo
-                    datosBrutoAlumnoMatricula.setNombre(nombreAlumno);
-                    
-                    for(int i = 1; i < valoresCampos.length; i++)
+                    // Si tiene algun valor el campo de registro de la asignatura 
+                    if(i + 1 < valoresRegistro.length && valoresRegistro[i+1] != null && !"".equals(valoresRegistro[i+1].trim()))
                     {
-                        // Si tiene algun valor el campo de registro de la asignatura 
-                        if(!"".equals(valoresRegistro[i + 1].trim()))
-                        {
-                            // Obtener a que campo de asignatura corresponde
-                            String asignatura = valoresCampos[i].trim();
-                            
-                            // Añadir asignatura matriculada al registro -> LENGUA
-                            datosBrutoAlumnoMatricula.setAsignatura(asignatura.toUpperCase());
-                            
-                            // Añadir curso al registro -> 2DAM
-                            datosBrutoAlumnoMatricula.setCursoEtapa(cursoEtapa);
-                            
-                            // Guardar o actualizar en la tabla -> DatosBrutoAlumnoMatricula
-                            iDatosBrutoAlumnoMatriculaRepository.saveAndFlush(datosBrutoAlumnoMatricula);
-                        }
+                        // Crear registro
+                        DatosBrutoAlumnoMatricula datosBrutoAlumnoMatricula = new DatosBrutoAlumnoMatricula();
+                        
+                        // Añadir apellidos del alumno al registro -> Martinez Guerbos
+                        datosBrutoAlumnoMatricula.setApellidos(apellidosAlumno);
+                        
+                        // Añadir nombre del alumno al registro -> Pablo
+                        datosBrutoAlumnoMatricula.setNombre(nombreAlumno);
+                    	
+                        // Obtener a que campo de asignatura corresponde
+                        String asignatura = valoresCampos[i].trim();
+                        
+                        // Añadir asignatura matriculada al registro -> LENGUA
+                        datosBrutoAlumnoMatricula.setAsignatura(asignatura.toUpperCase());
+                        
+                        // Añadir curso al registro -> 2DAM
+                        datosBrutoAlumnoMatricula.setCursoEtapa(cursoEtapa);
+                        
+                        // Guardar o actualizar en la tabla -> DatosBrutoAlumnoMatricula
+                        this.iDatosBrutoAlumnoMatriculaRepository.saveAndFlush(datosBrutoAlumnoMatricula);
                     }
                 }
             }
         } 
-        catch (Exception e) 
+        catch (Exception exception) 
         {
+        	String errorString = "ERROR - Los datos de matrícula no han podido ser procesados" ;
+        	log.error(errorString, exception) ;
             // Captura cualquier excepción y lanza una excepción personalizada
-            throw new MatriculasHorariosServerException(1, "ERROR - Los datos de matrícula no han podido ser procesados", e);
+            throw new MatriculasHorariosServerException(1, errorString, exception) ;
         }
         finally 
         {
