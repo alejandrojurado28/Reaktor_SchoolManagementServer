@@ -1,0 +1,267 @@
+{
+	"info": {
+		"_postman_id": "debdbecc-f089-4291-b56a-76d8fe80d588",
+		"name": "Matriculas",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "23788920"
+	},
+	"item": [
+		{
+			"name": "CargaMatriculas",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "curso",
+						"value": "1",
+						"type": "text"
+					},
+					{
+						"key": "etapa",
+						"value": "Bachillerato",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "csv",
+							"type": "file",
+							"src": []
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8080/direccion/cargarMatriculas",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"direccion",
+						"cargarMatriculas"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "New Request",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/direccion/cursoEtapa",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"direccion",
+						"cursoEtapa"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "New Request",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "curso",
+						"value": "1",
+						"type": "text"
+					},
+					{
+						"key": "etapa",
+						"value": "Bachillerato",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/direccion/grupos",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"direccion",
+						"grupos"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "New Request",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/direccion/grupos",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"direccion",
+						"grupos"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "New Request",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "curso",
+						"value": "1",
+						"type": "text"
+					},
+					{
+						"key": "etapa",
+						"value": "Bachillerato",
+						"type": "text"
+					},
+					{
+						"key": "grupo",
+						"value": "A",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/direccion/grupos",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"direccion",
+						"grupos"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "New Request",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"alumnos\":[\r\n        {\r\n            \"nombre\" : \"Pepe\",\r\n            \"apellidos\" : \"Flores\"\r\n        },\r\n        {\r\n            \"nombre\" : \"Juan\",\r\n            \"apellidos\" : \"Boniato\"\r\n        }\r\n\r\n    ] \r\n    \r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/direccion/grupos/alumnos?curso=1&etapa=Bachillerato&grupo=A",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"direccion",
+						"grupos",
+						"alumnos"
+					],
+					"query": [
+						{
+							"key": "curso",
+							"value": "1"
+						},
+						{
+							"key": "etapa",
+							"value": "Bachillerato"
+						},
+						{
+							"key": "grupo",
+							"value": "A"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "New Request",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"nombre\" : \"Pepe\",\r\n    \"apellidos\" : \"Flores\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/direccion/grupos/alumnos",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"direccion",
+						"grupos",
+						"alumnos"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "New Request",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/direccion/grupos/alumnos?curso=1&etapa=Bachillerato&grupo=A",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"direccion",
+						"grupos",
+						"alumnos"
+					],
+					"query": [
+						{
+							"key": "curso",
+							"value": "1"
+						},
+						{
+							"key": "etapa",
+							"value": "Bachillerato"
+						},
+						{
+							"key": "grupo",
+							"value": "A"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
