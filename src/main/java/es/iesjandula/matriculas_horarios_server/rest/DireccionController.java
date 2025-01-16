@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -17,7 +18,9 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import es.iesjandula.matriculas_horarios_server.dtos.AlumnoDto;
+import es.iesjandula.matriculas_horarios_server.dtos.AsignaturaDto;
 import es.iesjandula.matriculas_horarios_server.dtos.CursoEtapaDto;
+import es.iesjandula.matriculas_horarios_server.models.Asignatura;
 import es.iesjandula.matriculas_horarios_server.models.CursoEtapa;
 import es.iesjandula.matriculas_horarios_server.models.CursoEtapaGrupo;
 import es.iesjandula.matriculas_horarios_server.models.DatosBrutoAlumnoMatricula;
@@ -25,6 +28,7 @@ import es.iesjandula.matriculas_horarios_server.models.DatosBrutoAlumnoMatricula
 import es.iesjandula.matriculas_horarios_server.models.ids.IdCursoEtapa;
 import es.iesjandula.matriculas_horarios_server.models.ids.IdCursoEtapaGrupo;
 import es.iesjandula.matriculas_horarios_server.parsers.IParseoDatosBrutos;
+import es.iesjandula.matriculas_horarios_server.repositories.IAsignaturaRepository;
 import es.iesjandula.matriculas_horarios_server.repositories.ICursoEtapaGrupoRepository;
 import es.iesjandula.matriculas_horarios_server.repositories.ICursoEtapaRepository;
 import es.iesjandula.matriculas_horarios_server.repositories.IDatosBrutoAlumnoMatriculaGrupoRepository;
@@ -59,6 +63,9 @@ public class DireccionController
 	
 	@Autowired
 	IParseoDatosBrutos iParseoDatosBrutos;
+	
+	@Autowired
+	IAsignaturaRepository iAsignaturaRepository ;
     
     /**
      * Endpoint para cargar las matrículas a través de un archivo CSV.
@@ -631,6 +638,62 @@ public class DireccionController
             MatriculasHorariosServerException matriculasHorariosServerException = new MatriculasHorariosServerException(1, msgError, exception);
             return ResponseEntity.status(500).body(matriculasHorariosServerException.getBodyExceptionMessage());
         }
+    }
+    
+    @RequestMapping(method = RequestMethod.GET, value = "/etapaCursos")
+    public ResponseEntity<?> obtenerCursosEtapas()
+    {
+    	try 
+    	{
+    		List<CursoEtapa> cursos = this.iCursoEtapaRepository.findAll() ;
+        	
+        	log.info("INFO - Lista de los cursos etapas") ;
+        	return ResponseEntity.status(200).body(cursos) ;
+		} 
+    	catch (Exception exception) 
+    	{
+			String msgError = "ERROR - No se pudo obtener la lista de cursos etapas" ;
+			log.error(msgError, exception) ;
+			MatriculasHorariosServerException matriculasHorariosServerException = new MatriculasHorariosServerException(1, msgError, exception) ;
+			return ResponseEntity.status(500).body(matriculasHorariosServerException.getBodyExceptionMessage()) ;
+		}
+    	
+    }
+    
+    @RequestMapping(method = RequestMethod.GET, value = "/asignaturas")
+    public ResponseEntity<?> obtenerAsignatura
+    (
+    		@RequestParam("curso") int curso,
+    		@RequestParam("etapa") String etapa
+    )
+    {
+    	
+    	try 
+    	{
+			List<Asignatura> asignaturas = iAsignaturaRepository.findByCursoAndEtapa(curso, etapa) ;
+			
+			// Mapear a DTO y calcular el número de alumnos matriculados
+			List<AsignaturaDto> asignaturasDto = asignaturas.stream().map(asignatura -> 
+			{
+				AsignaturaDto dto = new AsignaturaDto() ;
+				dto.setNombre(asignatura.getId().getNombre()) ;
+				dto.setGrupo(asignatura.getId().getGrupo()) ;
+				dto.setEtapa(asignatura.getId().getEtapa()) ;
+				dto.setCurso(asignatura.getId().getCurso()) ;
+				dto.setNumeroDeAlumnos(asignatura.getMatriculas().size()) ;
+				return dto ;
+			}).collect(Collectors.toList()) ;
+			
+			return ResponseEntity.status(200).body(asignaturasDto) ;
+		} 
+    	catch (Exception exception) 
+    	{
+			String msgError = "ERROR - No se pudo obtener la lista de asignaturas" ;
+			log.error(msgError, exception) ;
+			MatriculasHorariosServerException matriculasHorariosServerException = new MatriculasHorariosServerException(1, msgError, exception) ;
+			return ResponseEntity.status(500).body(matriculasHorariosServerException.getBodyExceptionMessage()) ;
+		}
+    	
     }
 
 }
