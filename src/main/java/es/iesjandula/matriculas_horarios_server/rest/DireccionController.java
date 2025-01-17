@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Scanner;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,7 @@ import es.iesjandula.matriculas_horarios_server.dtos.AlumnoDto;
 import es.iesjandula.matriculas_horarios_server.dtos.AsignaturaDto;
 import es.iesjandula.matriculas_horarios_server.dtos.CursoEtapaDto;
 import es.iesjandula.matriculas_horarios_server.models.Asignatura;
+import es.iesjandula.matriculas_horarios_server.models.Bloque;
 import es.iesjandula.matriculas_horarios_server.models.CursoEtapa;
 import es.iesjandula.matriculas_horarios_server.models.CursoEtapaGrupo;
 import es.iesjandula.matriculas_horarios_server.models.DatosBrutoAlumnoMatricula;
@@ -694,6 +696,52 @@ public class DireccionController
 			return ResponseEntity.status(500).body(matriculasHorariosServerException.getBodyExceptionMessage()) ;
 		}
     	
+    }
+    
+    @RequestMapping(method = RequestMethod.POST, value = "/bloques")
+    public ResponseEntity<?> crearBloques
+    (
+    		@RequestParam("asignaturas") int curso,
+    		@RequestParam("asignaturas") String etapa,
+    		@RequestParam("asignaturas") List<Asignatura> asignaturas
+    )
+    {
+    	try
+    	{	
+    		if (asignaturas.size() < 2)
+    		{
+                String msgError = "ERROR - Hay que seleccionar al menos 2 asignaturas";
+                log.error(msgError);
+                throw new MatriculasHorariosServerException(100, msgError);
+    		}
+    		
+    		Bloque bloque = new Bloque();
+    		
+    		//Se crea un Atomic Integer para poder usar el método "getAndIncrement"
+    		AtomicInteger integer = new AtomicInteger(1);
+    		
+    		int nuevoId = integer.getAndIncrement();
+    		
+    		//Se crea un id autogenerado artificialmente y se concatena para que cuente como un String
+    		bloque.setId("BLOQUE_" + nuevoId);
+    	}
+    	catch (Exception exception)
+    	{
+			String msgError = "ERROR - No se pudo obtener la lista de asignaturas" ;
+			log.error(msgError, exception) ;
+			MatriculasHorariosServerException matriculasHorariosServerException = new MatriculasHorariosServerException(1, msgError, exception) ;
+			return ResponseEntity.status(500).body(matriculasHorariosServerException.getBodyExceptionMessage()) ;
+    	}
+    	
+    	/**Hacer un dto que contenga los datos que me interesan
+    	 * - Lista de los nombres de las asignaturas
+    	 * - Horas
+    	 * - Alumnos
+    	 * - Grupo
+    	 * - Bloque
+    	*/
+    	
+		return null;
     }
 
 }
