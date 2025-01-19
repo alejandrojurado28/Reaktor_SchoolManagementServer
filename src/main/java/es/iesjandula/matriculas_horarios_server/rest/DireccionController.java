@@ -27,10 +27,12 @@ import es.iesjandula.matriculas_horarios_server.models.CursoEtapa;
 import es.iesjandula.matriculas_horarios_server.models.CursoEtapaGrupo;
 import es.iesjandula.matriculas_horarios_server.models.DatosBrutoAlumnoMatricula;
 import es.iesjandula.matriculas_horarios_server.models.DatosBrutoAlumnoMatriculaGrupo;
+import es.iesjandula.matriculas_horarios_server.models.ids.IdAsignatura;
 import es.iesjandula.matriculas_horarios_server.models.ids.IdCursoEtapa;
 import es.iesjandula.matriculas_horarios_server.models.ids.IdCursoEtapaGrupo;
 import es.iesjandula.matriculas_horarios_server.parsers.IParseoDatosBrutos;
 import es.iesjandula.matriculas_horarios_server.repositories.IAsignaturaRepository;
+import es.iesjandula.matriculas_horarios_server.repositories.IBloqueRepository;
 import es.iesjandula.matriculas_horarios_server.repositories.ICursoEtapaGrupoRepository;
 import es.iesjandula.matriculas_horarios_server.repositories.ICursoEtapaRepository;
 import es.iesjandula.matriculas_horarios_server.repositories.IDatosBrutoAlumnoMatriculaGrupoRepository;
@@ -68,6 +70,9 @@ public class DireccionController
 	
 	@Autowired
 	IAsignaturaRepository iAsignaturaRepository ;
+	
+	@Autowired
+	IBloqueRepository iBloqueRepository ;
     
     /**
      * Endpoint para cargar las matrículas a través de un archivo CSV.
@@ -641,7 +646,15 @@ public class DireccionController
             return ResponseEntity.status(500).body(matriculasHorariosServerException.getBodyExceptionMessage());
         }
     }
-    
+     /**
+      * Endpoint para obtener los cursos etapas.
+      * 
+      * Este método obtiene mediante un get todos los cursos etapas
+      * guardados en base de datos para despues mostrarlos en el
+      * front en un select.
+      * 
+      * @return ResponseEntity<?> - Respuesta con las lista de cursos y etapas.
+      */
     @RequestMapping(method = RequestMethod.GET, value = "/etapaCursos")
     public ResponseEntity<?> obtenerCursosEtapas()
     {
@@ -662,6 +675,17 @@ public class DireccionController
     	
     }
     
+    /**
+     * Endpoint para obtener las asignaturas de los cursos etapas.
+     * 
+     * Este método recibe los parámetros del curso y la etapa y luego recupera una lista
+     * de asignaturas mostrando su nombre, el nº de horas, el nº de alumnos tanto en general
+     * como en los distintos grupos.
+     * 
+     * @param curso 		     - El curso para el que se solicita la lista de alumnos.
+     * @param etapa 			 - La etapa para la cual se solicita la lista de alumnos.
+     * @return ResponseEntity<?> - Respuesta con la lista de asignaturas mapeando un dto para mostrar los datos de las asignaturas.
+     */
     @RequestMapping(method = RequestMethod.GET, value = "/asignaturas")
     public ResponseEntity<?> obtenerAsignatura
     (
@@ -742,6 +766,57 @@ public class DireccionController
     	*/
     	
 		return null;
+    }
+    
+    /**
+     * Endpoint para borrar un bloque y sus respectiva asignatura.
+     * 
+     * Este método recibirá un JSON con el curso, la etapa y el nombre de la asignatura
+     * para luego settear a null el campo bloque_id y eliminar la asignatura del bloque de 
+     * modo que dicho bloque quedará eliminado
+     * 
+     * @param  idAsignatura 	 - JSON que contiene el curso, la etapa y el nombre de la asignatura.
+     * @return ResponseEntity<?> - Respuesta del endpoint que no devolverá nada
+     */
+    @RequestMapping(method = RequestMethod.DELETE, value = "/eliminarBloque")
+    public ResponseEntity<?> eliminarBloque
+    (
+    		@RequestBody IdAsignatura idAsignatura
+    )
+    {
+    	
+    	try 
+    	{
+    		
+    		// Buscamos el id de la asignatura
+			Optional<Asignatura> asignaturaOpt = iAsignaturaRepository.findById(idAsignatura) ;
+			
+			if (asignaturaOpt.isPresent())
+			{
+				Asignatura asignatura = asignaturaOpt.get() ;
+				
+				// Desasociar la asignatura del bloque
+				Bloque bloque = asignatura.getBloqueId() ;
+				asignatura.setBloqueId(null) ;
+				iAsignaturaRepository.saveAndFlush(asignatura) ;
+				
+				if (bloque != null && bloque.getAsignaturas().isEmpty())
+				{
+					iBloqueRepository.delete(bloque) ;
+				}
+			}
+			
+			log.info("INFO - Bloque eliminado con éxito") ;
+			return ResponseEntity.status(200).build() ;
+			
+		} catch (Exception exception) 
+    	{
+			String msgError = "ERROR - Error en el servidor" ;
+			log.error(msgError, exception) ;
+			MatriculasHorariosServerException matriculasHorariosServerException = new MatriculasHorariosServerException(1, msgError, exception) ;
+			return ResponseEntity.status(500).body(matriculasHorariosServerException.getBodyExceptionMessage()) ;
+		} 
+    	
     }
 
 }
