@@ -1,5 +1,7 @@
 package es.iesjandula.matriculas_horarios_server.dtos;
 
+import java.util.Map;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -19,5 +21,7 @@ public class AsignaturaDto
 	private int curso ;
 	
 	private int numeroDeAlumnos ;
+	
+	private Map<String, Integer> numeroAlumnosEnGrupo ;
 	
 }

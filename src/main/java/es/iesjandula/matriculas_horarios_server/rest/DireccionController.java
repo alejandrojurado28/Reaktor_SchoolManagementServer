@@ -3,6 +3,7 @@ package es.iesjandula.matriculas_horarios_server.rest;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.Scanner;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -706,7 +707,16 @@ public class DireccionController
 				dto.setGrupo(asignatura.getId().getGrupo()) ;
 				dto.setEtapa(asignatura.getId().getEtapa()) ;
 				dto.setCurso(asignatura.getId().getCurso()) ;
+				// Numero total de alumnos en la asignatura
 				dto.setNumeroDeAlumnos(asignatura.getMatriculas().size()) ;
+				
+				// Calcular el número de alumnos en el grupo específico
+				Map<String, Integer> numeroAlumnosEnGrupo = asignatura.getMatriculas().stream()
+						.collect(Collectors.groupingBy(
+								matricula -> matricula.getAsignatura().getId().getGrupo(),
+								Collectors.summingInt(m -> 1)
+						 )) ;
+				dto.setNumeroAlumnosEnGrupo(numeroAlumnosEnGrupo) ;
 				return dto ;
 			}).collect(Collectors.toList()) ;
 			
