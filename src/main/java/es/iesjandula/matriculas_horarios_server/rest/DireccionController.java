@@ -735,19 +735,29 @@ public class DireccionController
     @RequestMapping(method = RequestMethod.POST, value = "/bloques")
     public ResponseEntity<?> crearBloques
     (
-    		@RequestParam("asignaturas") int curso,
-    		@RequestParam("asignaturas") String etapa,
-    		@RequestParam("asignaturas") List<Asignatura> asignaturas
+    		@RequestParam("curso") int curso,
+    		@RequestParam("etapa") String etapa,
+    		@RequestParam("asignaturas") List<String> asignaturas
     )
-    {
+    {	
     	try
     	{	
-    		if (asignaturas.size() < 2)
+    		
+    		if ( asignaturas == null || asignaturas.size() < 2)
     		{
                 String msgError = "ERROR - Hay que seleccionar al menos 2 asignaturas";
                 log.error(msgError);
                 throw new MatriculasHorariosServerException(100, msgError);
     		}
+    		
+            List<Asignatura> asignaturasSeleccionadas = iAsignaturaRepository.findByCursoAndEtapaAndNombre(curso, etapa, asignaturas);
+            
+            if (asignaturasSeleccionadas.size() != asignaturas.size()) 
+            {
+                String msgError = "ERROR - Algunas asignaturas no fueron encontradas";
+                log.error(msgError);
+                throw new MatriculasHorariosServerException(101, msgError);
+            }
     		
     		Bloque bloque = new Bloque();
     		
@@ -758,24 +768,30 @@ public class DireccionController
     		
     		//Se crea un id autogenerado artificialmente y se concatena para que cuente como un String
     		bloque.setId("BLOQUE_" + nuevoId);
+    		
+    		this.iBloqueRepository.saveAndFlush(bloque);
+    		
+    		for (Asignatura asignatura : asignaturasSeleccionadas)
+    		{
+    			asignatura.setBloqueId(bloque);
+    		}
+    		
+    		iAsignaturaRepository.saveAllAndFlush(asignaturasSeleccionadas);
+    		
+    		return ResponseEntity.status(201).body(bloque.getId());
+    		
+    	}
+    	catch (MatriculasHorariosServerException matriculasHorariosServerException) {
+            return ResponseEntity.status(400).body(matriculasHorariosServerException.getBodyExceptionMessage());
     	}
     	catch (Exception exception)
     	{
-			String msgError = "ERROR - No se pudo obtener la lista de asignaturas" ;
+			String msgError = "ERROR - No se pudo crear el bloque" ;
 			log.error(msgError, exception) ;
 			MatriculasHorariosServerException matriculasHorariosServerException = new MatriculasHorariosServerException(1, msgError, exception) ;
 			return ResponseEntity.status(500).body(matriculasHorariosServerException.getBodyExceptionMessage()) ;
     	}
     	
-    	/**Hacer un dto que contenga los datos que me interesan
-    	 * - Lista de los nombres de las asignaturas
-    	 * - Horas
-    	 * - Alumnos
-    	 * - Grupo
-    	 * - Bloque
-    	*/
-    	
-		return null;
     }
     
     /**
