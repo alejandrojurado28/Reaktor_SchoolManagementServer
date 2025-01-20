@@ -750,7 +750,7 @@ public class DireccionController
                 throw new MatriculasHorariosServerException(100, msgError);
     		}
     		
-            List<Asignatura> asignaturasSeleccionadas = iAsignaturaRepository.findByCursoAndEtapaAndNombre(curso, etapa, asignaturas);
+            List<Asignatura> asignaturasSeleccionadas = iAsignaturaRepository.findAsignaturasByCursoEtapaAndNombres(curso, etapa, asignaturas);
             
             if (asignaturasSeleccionadas.size() != asignaturas.size()) 
             {
