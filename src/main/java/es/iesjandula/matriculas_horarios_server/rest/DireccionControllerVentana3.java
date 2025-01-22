@@ -184,6 +184,12 @@ public class DireccionControllerVentana3
    		
    		for (Asignatura asignatura : asignaturasSeleccionadas)
    		{
+   			if (asignatura.getBloqueId() != null)
+   			{
+                String msgError = "ERROR - Una de las asignaturas ya tiene un bloque asignado";
+                log.error(msgError);
+                throw new MatriculasHorariosServerException(102, msgError);
+   			}
    			asignatura.setBloqueId(bloque);
    		}
    		
