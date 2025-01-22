@@ -37,9 +37,9 @@ public class Bloque
      * El identificador es de tipo {@link String} y tiene un máximo de 100 caracteres.</p>
      */
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(length = 100)
-    private String id;
+    private Long id;
     
     /**
      * Lista de asignaturas asociadas al bloque.
