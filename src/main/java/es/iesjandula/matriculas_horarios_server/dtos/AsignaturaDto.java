@@ -24,4 +24,6 @@ public class AsignaturaDto
 	
 	private Map<String, Integer> numeroAlumnosEnGrupo ;
 	
+	private Long bloqueId ;
+	
 }

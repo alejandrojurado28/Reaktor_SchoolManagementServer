@@ -126,6 +126,8 @@ public class DireccionControllerVentana3
 								Collectors.summingInt(m -> 1)
 						 )) ;
 				dto.setNumeroAlumnosEnGrupo(numeroAlumnosEnGrupo) ;
+				
+				dto.setBloqueId(asignatura.getBloqueId() != null ? asignatura.getBloqueId().getId() : null) ;
 				return dto ;
 			}).collect(Collectors.toList()) ;
 			
