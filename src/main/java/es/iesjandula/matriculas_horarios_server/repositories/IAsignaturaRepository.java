@@ -1,6 +1,7 @@
 package es.iesjandula.matriculas_horarios_server.repositories;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -34,6 +35,12 @@ public interface IAsignaturaRepository extends JpaRepository<Asignatura, IdAsign
 	    @Param("curso") int curso, 
 	    @Param("etapa") String etapa, 
 	    @Param("nombres") List<String> nombres
+	);
+	
+	Optional<Asignatura> findByCursoAndEtapaAndNombre(
+	    @Param("curso") int curso, 
+	    @Param("etapa") String etapa, 
+	    @Param("nombre") String nombre
 	);
 	
 }
