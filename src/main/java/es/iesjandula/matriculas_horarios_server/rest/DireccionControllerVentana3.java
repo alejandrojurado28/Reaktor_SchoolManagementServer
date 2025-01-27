@@ -214,6 +214,73 @@ public class DireccionControllerVentana3
    	
    }
    
+   @RequestMapping(method = RequestMethod.POST, value = "/bloques")
+   public ResponseEntity<?> crearBloques2
+   (
+   		@RequestParam("curso") int curso,
+   		@RequestParam("etapa") String etapa,
+   		@RequestParam("asignaturas") List<String> asignaturas
+   )
+   {	
+   	try
+   	{	
+   		
+   		if ( asignaturas == null || asignaturas.size() < 2)
+   		{
+               String msgError = "ERROR - Hay que seleccionar al menos 2 asignaturas";
+               
+               log.error(msgError);
+               throw new MatriculasHorariosServerException(100, msgError);
+   		}
+   		
+       List<Asignatura> asignaturasSeleccionadas = iAsignaturaRepository.findAsignaturasByCursoEtapaAndNombres(curso, etapa, asignaturas);
+       
+       if (asignaturasSeleccionadas.size() != asignaturas.size()) 
+       {
+           String msgError = "ERROR - Algunas asignaturas no fueron encontradas";
+           log.error(msgError);
+           throw new MatriculasHorariosServerException(101, msgError);
+       }
+       
+  		for (Asignatura asignatura : asignaturasSeleccionadas)
+  		{
+  			if (asignatura.getBloqueId() != null)
+  			{
+               String msgError = "ERROR - Una de las asignaturas ya tiene un bloque asignado";
+               
+               log.error(msgError);
+               throw new MatriculasHorariosServerException(102, msgError);
+  			}
+  			
+  		}
+	
+   		Bloque bloque = new Bloque();
+   		
+   		this.iBloqueRepository.save(bloque);
+
+   		for (Asignatura asignatura : asignaturasSeleccionadas)
+   		{
+   			asignatura.setBloqueId(bloque);
+   		}
+   		
+   		this.iAsignaturaRepository.saveAllAndFlush(asignaturasSeleccionadas);
+   		
+   		return ResponseEntity.status(201).body(bloque.getId());
+   		
+   	}
+   	catch (MatriculasHorariosServerException matriculasHorariosServerException) {
+           return ResponseEntity.status(400).body(matriculasHorariosServerException.getBodyExceptionMessage());
+   	}
+   	catch (Exception exception)
+   	{
+			String msgError = "ERROR - No se pudo crear el bloque" ;
+			log.error(msgError, exception) ;
+			MatriculasHorariosServerException matriculasHorariosServerException = new MatriculasHorariosServerException(1, msgError, exception) ;
+			return ResponseEntity.status(500).body(matriculasHorariosServerException.getBodyExceptionMessage()) ;
+   	}
+   	
+   }
+   
    /**
     * Endpoint para borrar un bloque y sus respectiva asignatura.
     * 
